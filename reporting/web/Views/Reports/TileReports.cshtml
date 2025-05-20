@@ -396,7 +396,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet" ng-if="!hideSortOption">
+                        <div class="dashboard-sort-container ng-hide" ng-show="!showSearch && !isTablet && !hideSortOption">
                             <span class="dashboard-dropdown-label">[[[Sort]]]</span>
                             <div id="dashboard-sort-dropdown" class="dashboard-filter-sort dropdown text-right no-padding">
                                 <select id="report-sort-option-module" ng-model="sortValue" ng-change="setSelectedSort(sortValue[0], sortValue[1])" class="selectpicker dashboard-sort-filter-menu no-padding" multiple data-multiple-separator=" - ">
@@ -490,7 +490,7 @@
                                                 <a ng-if="!hideOpen" href="{{viewDashboardUrl(dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" target="_blank" title="Open">
                                                     <span class="su su-external-link"></span>
                                                 </a>
-                                                <span ng-if="dashboardItem.CanWrite && !isTablet && !hideEdit" ng-click="editDashboard()" class="su su-edit" title="Edit"></span>
+                                                <span ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !hideEdit" ng-click="editDashboard()" class="su su-edit" title="Edit"></span>
                                                 <span class="item-permissions option-click" title="Share" ng-if="(dashboardItem.CreatedById==currentUserId || hasDashboardSharePermission) && !hideShare" ng-click="shareDashboardPermission()" ng-hide="isHideIconBasedOnDnsName">
                                                     <i class="su su-share"></i>
                                                 </span>
@@ -526,7 +526,7 @@
                                                             <span>[[[Get Link]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanDownload && !dashboardItem.IsLocked && !hideDownload">
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanDownload || isAdmin) && !dashboardItem.IsLocked && !hideDownload">
                                                         <span class="download-item option-click" href="{{downloadReportUrl(dashboardItem.ItemType, dashboardItem.Id, dashboardItem.CategoryName, dashboardItem.Name)}}" title="" ng-click="downloadReport($event)">
                                                             <i class="su su-download"></i>
                                                             <span>[[[Download Report]]]</span>
@@ -562,22 +562,22 @@
                                                     </li>
                                                     @if(ServerAppConfig.IsSelfHosted)
                                                     {
-                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions"></li>
-                                                        <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsLocked && !hideProcessingOptions">
+                                                        <li role="separator" class="divider" ng-if="!hideProcessingOptions"></li> 
+                                                        <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideProcessingOptions">
                                                             <span title="" class="ProcessOption option-click" ng-click="ProcessOption()">
                                                                 <i class="su su-cache_3"></i>
                                                                 <span>[[[Processing Options]]]</span>
                                                             </span>
                                                         </li>
                                                     }
-                                                    <li ng-if="(dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone) && !isTablet && !dashboardItem.IsLocked && !(hideMove && hideCopy && hideClone)" role="separator" class="divider"></li>
-                                                    <li ng-if="dashboardItem.CanMove && !isTablet && !dashboardItem.IsLocked && !hideMove">
+                                                    <li ng-if="((dashboardItem.CanMove || dashboardItem.CanCopy || dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !(hideMove && hideCopy && hideClone))" role="separator" class="divider"></li>
+                                                    <li ng-if="(dashboardItem.CanMove || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideMove">
                                                         <span title="" class="moveItem option-click" data-action="Move" ng-click="moveDashboard()">
                                                             <i class="su su-move"></i>
                                                             <span>[[[Move]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanCopy && !isTablet && !dashboardItem.IsLocked && !hideCopy">
+                                                    <li ng-if="(dashboardItem.CanCopy || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideCopy">
                                                         <span title="" class="copyItem option-click" data-action="Copy" ng-click="copyDashboard()">
                                                             <i class="su su-copy"></i>
                                                             <span>[[[Copy]]]</span>
@@ -585,7 +585,7 @@
                                                     </li>
                                                     @if (@ServerAppConfig.EnableClone)
                                                     {
-                                                        <li ng-if="dashboardItem.CanClone && !isTablet && !dashboardItem.IsLocked && !hideClone" ng-hide="isHideIconBasedOnDnsName">
+                                                        <li ng-if="(dashboardItem.CanClone || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideClone" ng-hide="isHideIconBasedOnDnsName">
                                                             <span title="" class="copyItem option-click" data-action="Clone" ng-click="cloneDashboard()">
                                                                 <i class="su su-clone"></i>
                                                                 <span>[[[Clone]]]</span>
@@ -601,8 +601,8 @@
                                                         </span>
                                                     </li>
                                                     }
-                                                    <li ng-if="(((dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanSchedule) || dashboardItem.CreatedById==currentUserId || isAdmin) && !hideCreateSchedule) && !isTablet" role="separator" class="divider"></li>
-                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && dashboardItem.CanSchedule && !isTablet && !hideCreateSchedule" ng-hide="isHideIconBasedOnDnsName">
+                                                    <li ng-if="(((dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin)) || dashboardItem.CreatedById==currentUserId || isAdmin) && !hideCreateSchedule) && !isTablet" role="separator" class="divider"></li>
+                                                    <li ng-if="dashboardItem.ItemType == @((int)ItemType.Report) && (dashboardItem.CanSchedule || isAdmin) && !isTablet && !hideCreateSchedule" ng-hide="isHideIconBasedOnDnsName">
                                                         <span href="#" class="schedule-dashboards option-click prevent-default-action" title="" ng-click="scheduleDashboard()">
                                                             <i class="su su-nav-schedule"></i>
                                                             <span>[[[Create Schedule]]]</span>
@@ -615,7 +615,7 @@
                                                             <span>[[[Version History]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="(dashboardItem.CanWrite || dashboardItem.CanDelete) && !isTablet && !(hideEditAsXml && hideUpdate && hideDelete)" role="separator" class="divider"></li>
+                                                    <li ng-if="((dashboardItem.CanWrite || dashboardItem.CanDelete || isAdmin) && !isTablet && !(hideEditAsXml && hideUpdate && hideDelete))" role="separator" class="divider"></li>
                                                     <li ng-if="dashboardItem.CanWrite && !isTablet && dashboardItem.Extension =='.sydx' && '@GlobalAppSettings.Branding' == '@AppBranding.Syncfusion.Identifier'">
                                                         <span title="" class="item-edit option-click" ng-click="updateDashboard()">
                                                             <i class="su su-upload"></i>
@@ -628,19 +628,19 @@
                                                             <span>[[[Update Data Source(s)]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && !hideEditAsXml">
+                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !hideEditAsXml">
                                                         <span class="option-click" title="" ng-click="editRDLInXML()">
                                                             <i class="su su-embed"></i>
                                                             <span>[[[Edit as XML]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanWrite && !isTablet && !dashboardItem.IsLocked && !hideUpdate">
+                                                    <li ng-if="(dashboardItem.CanWrite || isAdmin) && !isTablet && !dashboardItem.IsLocked && !hideUpdate">
                                                         <span title="" class="item-update option-click" ng-click="updateReport()">
                                                             <i class="su su-edit"></i>
                                                             <span>[[[Update]]]</span>
                                                         </span>
                                                     </li>
-                                                    <li ng-if="dashboardItem.CanDelete && !isTablet && !hideDelete">
+                                                    <li ng-if="(dashboardItem.CanDelete || isAdmin) && !isTablet && !hideDelete">
                                                         <span title="" class="item-delete option-click" ng-click="deleteItem()">
                                                             <i class="su su-delete"></i>
                                                             <span>[[[Delete]]]</span>

@@ -52,13 +52,13 @@
     var showLicenseWarningIcon = ServerAppConfig.ShowLicenseWarning;
     var customUI = globalAppSettings.SystemSettings.CustomUI;
     var profile = customUI?.Profiles?.FirstOrDefault();
-    var showNotifications = isSelfHosted && (profile?.Notifications?.ShowMenu ?? true);
-    var showHelp = isSelfHosted && (profile?.Help?.ShowMenu ?? true);
-    var showProfile = isSelfHosted && (profile?.Profile?.ShowMenu ?? true);
+    var showNotifications = profile?.Notifications?.ShowMenu ?? true;
+    var showHelp = profile?.Help?.ShowMenu ?? true;
+    var showProfile = profile?.Profile?.ShowMenu ?? true;
     var showManageSite = profile?.Profile?.ShowManageSite ?? true;
     var showYourSites = profile?.Profile?.ShowYourSites ?? true;
-    var showMyProfile = isSelfHosted && (profile?.Profile?.ShowMyProfile ?? true);
-    var showLogout = isSelfHosted && (profile?.Profile?.ShowLogout ?? true);
+    var showMyProfile = profile?.Profile?.ShowMyProfile ?? true;
+    var showLogout = profile?.Profile?.ShowLogout ?? true;
     showProfile = showProfile && (showYourSites || showManageSite || showMyProfile || showLogout);
     var iscustomUIProfile = customUI?.Profiles != null && customUI.Profiles[0].Reports != null;
     var isAdmin = _identityResponse.IsAdmin;

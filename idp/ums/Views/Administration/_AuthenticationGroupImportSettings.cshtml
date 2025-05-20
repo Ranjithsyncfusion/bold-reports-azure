@@ -1,16 +1,16 @@
-﻿@{ 
+﻿﻿@{
     var isOauthSettings = ViewData["AuthType"] != null && ViewData["AuthType"].ToString() == AuthType.OAuth.ToString();
     var isOpenIdSettings = ViewData["AuthType"] != null && ViewData["AuthType"].ToString() == AuthType.OIDC.ToString();
     var providerCount = isOauthSettings ? 4 : 3;
 }
-    <div class="col-md-12 float-start no-padding auth-sub-title">
-        <div class="section-title">
-            <span>@T["Group Import Settings"]</span>
-        </div>
-    <div class="col-md-12 float-start no-padding section-info-message">
-            @Html.Raw(string.Format(T["This settings will be used for importing groups from the above configured authentication provider. We have {0} known authentication providers where we know how to import groups from them. Select any of the applicable provider from the dropdown."].Value, providerCount))
-        </div>
+<div class="col-md-12 float-start no-padding auth-sub-title">
+    <div class="section-title">
+        <span>@T["Group Import Settings"]</span>
     </div>
+    <div class="col-md-12 float-start no-padding section-info-message">
+        @Html.Raw(string.Format(T["This settings will be used for importing groups from the above configured authentication provider. We have {0} known authentication providers where we know how to import groups from them. Select any of the applicable provider from the dropdown."].Value, providerCount))
+    </div>
+</div>
 
 <div class="col-md-12 float-start no-padding input-field-margin">
     <div class="col-md-12 float-start no-padding">

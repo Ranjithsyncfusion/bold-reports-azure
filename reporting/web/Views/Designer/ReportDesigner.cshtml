@@ -26,7 +26,11 @@
         tourObj = JsonConvert.DeserializeObject<TourCookie>(JsonConvert.DeserializeObject(tourCookie).ToString());
     }
     var showTour = !new DeviceDetection(Context).IsMobile && ((tourCookie == null || (tourObj.TourCompleted == "false" && tourObj.TourSkipped == "false")));
+#if (BoldReportsCloud)
+    var designerServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint.TrimEnd('/');
+#else
     var designerServiceUrl = ServerAppConfig.InternalAppDataServiceUrl.TrimEnd('/');
+#endif
     var reportServiceUrl = designerServiceUrl + "/api/Designer";
     if (!string.IsNullOrWhiteSpace(ViewBag.categoryName) && !string.IsNullOrWhiteSpace(ViewBag.reportName))
     {
@@ -476,6 +480,7 @@
         var description = decodeHtmlAsString("@description");
         var isPublic = "@ViewBag.isPublic";
         isPublic = isPublic.toLowerCase();
+        var isSelfHosted = @Json.Serialize(ServerAppConfig.IsSelfHosted);
         var tags = @Json.Serialize(ViewBag.tags);
         var selectedTags = @Json.Serialize(ViewBag.selectedTags);
         var isDraft = "@ViewBag.isDraft";
@@ -1244,6 +1249,15 @@
                 $('#' + controlId + '_design_header_publish_div').css('opacity', '1');
                 $('#' + controlId + '_design_header_publish_btn').data('ejSplitButton').enable();
             }
+        }
+
+        if (!isSelfHosted) {
+            document.addEventListener("DOMContentLoaded", function (event) {
+                $.ajax({
+                    type: "Get",
+                    url: "/robots.txt",
+                });
+            })
         }
     </script>
 </head>

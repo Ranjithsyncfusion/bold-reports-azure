@@ -95,6 +95,10 @@
                 $('[data-toggle="tooltip"]').tooltip();
             },
             dataBound: function (args) {
+                var gridObj = $("#historygrid").data("ejGrid");
+                if(gridObj.model.currentIndex === 0) {
+                    gridObj.gotoPage(1);
+                }
                 $('[data-toggle="tooltip"]').tooltip();
             },
             columns: [

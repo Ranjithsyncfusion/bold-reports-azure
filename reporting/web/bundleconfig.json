@@ -1991,7 +1991,7 @@
       "wwwroot/Scripts/Administration/addrules.js",
       "wwwroot/Scripts/essentialjs/ej.daterangepicker.min.js"
     ],
-    "integrity": "sha384-gAkBwZCTHZIwGFfj3wv1RzeBEX3LamymHlazlQ5TAJ2ZVEonbNCcTTXan7rOpOEX"
+    "integrity": "sha384-vUfjmfxN7aVgKURO15fEIaowcBn/RPzA+eKdz6yenAy05AhAphj5lIFth4PTlxq/"
   },
   {
     "outputFileName": "wwwroot/cdn/css/custom-domain.min.css",

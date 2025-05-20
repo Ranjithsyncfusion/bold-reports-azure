@@ -41,7 +41,13 @@
             @Html.CheckBox("domain-change", true, new { @class = "material-checkbox", id = "domain-change" })
             @Html.Hidden("domain-change")
             <label for="domain-change" class="app-textbox-label no-margin">
+                @{
+#pragma warning disable SCS0029
+                }
                 @Html.Raw(string.Format(T["Update the URL of the {0}sites{1} that are deployed to the same URL."].Value, "<a target='_blank' class='text-decoration-none' href='" + existingDomainUrl + "'>", "</a>"))
+                @{
+#pragma warning restore SCS0029
+                }
             </label>
         </div>
         <div id="enable-checkbox" class="col-12 float-start no-padding">

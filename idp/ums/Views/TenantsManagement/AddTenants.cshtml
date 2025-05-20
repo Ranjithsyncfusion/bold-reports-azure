@@ -327,7 +327,13 @@
                                         </div>
                                         <div class="bi-branding">
                                             <label class="field-label">@T["Inherit Global Settings"]</label>
+                                            @{
+#pragma warning disable SCS0029
+                                            }
                                             <span tabindex="0" class="info-icon su su-info" role="button" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="focus" data-bs-html="true" data-bs-content="@Html.Raw(string.Format(T["Based on settings chosen,the following information will be copied to tenant: {0} Localization, {1} Date and Time Formats, {1} Font Family, {1} Email Configuration, {1} Account Settings, {1} Images. {2} Otherwise, default images and values will be used for the tenant settings."].Value, "<ul><li>", "</li><li>", "</li></ul>"))"></span>
+                                            @{
+#pragma warning restore SCS0029
+                                            }
                                             <select id="global-settings-options" data-width="100%">
                                                 <option value="@(GlobalSettingsOptions.DateTime.ToString())">@EnumHelper.GetDescription(GlobalSettingsOptions.DateTime)</option>
                                                 <option value="@(GlobalSettingsOptions.Language.ToString())">@EnumHelper.GetDescription(GlobalSettingsOptions.Language)</option>
