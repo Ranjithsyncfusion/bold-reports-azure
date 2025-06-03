@@ -20,7 +20,11 @@
     var language = CultureInfo.CurrentCulture.Name;
     var cdnLink = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var faviconLogo = globalAppSettings.SystemSettings.FavIcon;
-    var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl;
+#if (BoldReportsCloud)
+    var reportServiceUrl = globalAppSettings.SystemSettings.ReportServiceEndPoint;
+#else
+     var reportServiceUrl = ServerAppConfig.InternalAppDataServiceUrl;
+#endif
     var reportServerResourceUrl = globalAppSettings.SystemSettings.CDNLink.TrimEnd('/');
     var reportServiceCdnLink = globalAppSettings.SystemSettings.ReportServiceCdnLink.TrimEnd('/');
     var cdnDomain = GlobalAppSettings.CdnDomain;

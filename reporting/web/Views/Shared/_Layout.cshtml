@@ -375,7 +375,7 @@
             <div class="header-bar col-lg-12 col-md-12 col-sm-12">
                 @if (!isWelcomePage)
                 {
-                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-toggle="collapse" aria-expanded="false" data-target="#menu-area">
+                    <div class="mobile-menu-icon text-center mobile-visible collapsed" data-bs-toggle="collapse" aria-expanded="false" data-target="#menu-area">
                         <span>
                             <i class="su su-mobile-menu-icon"></i>
                         </span>
@@ -385,7 +385,7 @@
                     <h5 class="header-org-name">@globalAppSettings.SystemSettings.OrganizationName</h5>
                 </div>
 
-                <div class="pull-right" id="notification-section">
+                <div class="float-end" id="notification-section">
                     <a id="notification-link" class="notification-mobile-link no-padding" href="@Url.Action("getusernotifications", "notification" )">
                         <span id="notification-icon" class="su su-notification-alert">
 
@@ -409,7 +409,7 @@
                 </section>
             }
         }
-        <div id="content-area" class="clearfix col-xs-12">
+        <div id="content-area" class="clearfix col-12">
             <div class="suspension-warning" style="display:none">
                 <div class="warning-content"></div>
             </div>
